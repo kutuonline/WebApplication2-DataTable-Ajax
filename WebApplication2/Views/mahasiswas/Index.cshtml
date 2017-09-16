@@ -4,12 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@*<h2>Index</h2>*@
+
+<div><br /></div>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class="btn btn-primary"})
 </p>
-<table class="table">
+
+@*<table class="table>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nm_mhs)
@@ -42,4 +45,48 @@
     </tr>
 }
 
-</table>
+</table>*@
+
+<div style="width:100%; margin:0 auto;">
+    <table id="myTable" class="table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>NIP</th>
+                <th>Nama Mahasiswa</th>
+                <th>Email</th>
+                <th>Alamat</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section Scripts{
+    <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>    
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "processing": true,
+                "ajax": {
+                    "url": "/mahasiswas/LoadData",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "nip", "autoWidth": true },
+                    { "data": "nm_mhs", "autoWidth": true },
+                    { "data": "email", "autoWidth": true },
+                    { "data": "alamat", "autoWidth": true },
+                    {
+                        //-- reference: http://www.c-sharpcorner.com/article/ajax-crud-operation-with-jquery-datatables-in-asp-net-mvc-5-for-beginners/ --//
+                        "data": "nip",
+                        "render": function (data, type, full, meta) {
+                            return '<a href="@Url.Action("Edit","mahasiswas")?id=' + data + '" class="btn btn-default"> Edit</a> <a href="@Url.Action("Delete","mahasiswas")?id=' + data + '" class="btn btn-danger"> Delete</a>';
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}

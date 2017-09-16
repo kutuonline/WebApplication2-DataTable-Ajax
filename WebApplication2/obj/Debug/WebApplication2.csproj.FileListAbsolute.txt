@@ -55,3 +55,4 @@ E:\DAD\Latihan\WebApplication2\WebApplication2\obj\Debug\WebApplication2.dll
 E:\DAD\Latihan\WebApplication2\WebApplication2\obj\Debug\WebApplication2.pdb
 E:\DAD\Latihan\WebApplication2\WebApplication2\bin\EntityFramework.SqlServer.dll
 E:\DAD\Latihan\WebApplication2\WebApplication2\bin\EntityFramework.SqlServer.xml
+E:\DAD\Latihan\WebApplication2\WebApplication2\bin\System.Linq.Dynamic.dll

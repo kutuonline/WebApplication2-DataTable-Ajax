@@ -7,17 +7,29 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication2.Models;
+using System.Linq.Dynamic;
 
 namespace WebApplication2.Controllers
 {
     public class mahasiswasController : Controller
     {
-        private db_kampusEntities db = new db_kampusEntities();
+        private db_kampusEntities dc = new db_kampusEntities();
 
         // GET: mahasiswas
         public ActionResult Index()
         {
-            return View(db.mahasiswas.ToList());
+            //return View(db.mahasiswas.ToList());
+            return View();
+        }
+
+        
+        public ActionResult LoadData()
+        {
+            using (db_kampusEntities dc = new db_kampusEntities())
+            {
+                var data = dc.mahasiswas.OrderBy(a => a.nm_mhs).ToList();
+                return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: mahasiswas/Details/5
@@ -27,7 +39,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            mahasiswa mahasiswa = db.mahasiswas.Find(id);
+            mahasiswa mahasiswa = dc.mahasiswas.Find(id);
             if (mahasiswa == null)
             {
                 return HttpNotFound();
@@ -50,8 +62,8 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.mahasiswas.Add(mahasiswa);
-                db.SaveChanges();
+                dc.mahasiswas.Add(mahasiswa);
+                dc.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +77,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            mahasiswa mahasiswa = db.mahasiswas.Find(id);
+            mahasiswa mahasiswa = dc.mahasiswas.Find(id);
             if (mahasiswa == null)
             {
                 return HttpNotFound();
@@ -82,8 +94,8 @@ namespace WebApplication2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(mahasiswa).State = EntityState.Modified;
-                db.SaveChanges();
+                dc.Entry(mahasiswa).State = EntityState.Modified;
+                dc.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(mahasiswa);
@@ -96,7 +108,7 @@ namespace WebApplication2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            mahasiswa mahasiswa = db.mahasiswas.Find(id);
+            mahasiswa mahasiswa = dc.mahasiswas.Find(id);
             if (mahasiswa == null)
             {
                 return HttpNotFound();
@@ -109,9 +121,9 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            mahasiswa mahasiswa = db.mahasiswas.Find(id);
-            db.mahasiswas.Remove(mahasiswa);
-            db.SaveChanges();
+            mahasiswa mahasiswa = dc.mahasiswas.Find(id);
+            dc.mahasiswas.Remove(mahasiswa);
+            dc.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -119,7 +131,7 @@ namespace WebApplication2.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                dc.Dispose();
             }
             base.Dispose(disposing);
         }
