@@ -82,7 +82,7 @@
                         //-- reference: http://www.c-sharpcorner.com/article/ajax-crud-operation-with-jquery-datatables-in-asp-net-mvc-5-for-beginners/ --//
                         "data": "nip",
                         "render": function (data, type, full, meta) {
-                            return '<a href="@Url.Action("Edit","mahasiswas")?id=' + data + '" class="btn btn-default"> Edit</a> <a href="@Url.Action("Delete","mahasiswas")?id=' + data + '" class="btn btn-danger"> Delete</a>';
+                            return '<a href="@Url.Action("Edit","mahasiswas")?id=' + data + '" class="btn btn-default"> Edit</a> <a href="@Url.Action("Details","mahasiswas")?id=' + data + '" class="btn btn-default"> Detail</a> <a href="@Url.Action("Delete","mahasiswas")?id=' + data + '" class="btn btn-danger"> Delete</a>';
                         }
                     }
                 ]
